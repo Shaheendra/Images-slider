@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Slider</title>
+  <style>
+    /* styles.css */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+
+}
+
+.slider-container {
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  display: none;
+}
+
+.slide.active {
+  display: block;
+}
+
+.slide img {
+  width: 100%;
+  display: block;
+}
+
+.prev-btn, .next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 18px;
+}
+img{
+  border:4px solid white;
+  width:450px;
+  height:450px;
+  box-shadow: 14px 14px 14px ;
+  transition:width height ;
+  opacity:0.5;
+
+}
+img:hover{
+  opacity:1;
+  width:600px;
+  height:600px;
+  
+}
+
+.prev-btn:hover, .next-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+.next-btn {
+  right: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .slider-container {
+    width: 95%;
+  }
+}
+h1{
+  color:white;
+
+  
+}
+ </style>
+
+
+</head>
+<body>
+ 
+  <div class="slider-container">
+    <div class="slider">
+      <img src="https://th.bing.com/th/id/OIP.7Eqo1Elcd3gqGLajNfBrzwHaDt?w=349&h=174&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Image 1" class="slide active">
+      <img src="https://th.bing.com/th?id=OIP.B9diPdQq_hIwDJvch3drJQHaJ3&w=216&h=288&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2" alt="Image 2" class="slide">
+      <img src="https://th.bing.com/th?id=OIP.OB3GdQ66hbQ2WR8_KWIbpAHaEK&w=333&h=187&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2" alt="Image 3" class="slide">
+      <img src="https://th.bing.com/th?id=OIP.nFNFa7qkwx_wNdPpYv0S1AHaFw&w=283&h=220&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2" alt="Image 4" class="slide">
+    </div>
+    <button class="prev-btn">&lt;</button>
+    <button class="next-btn">&gt;</button>
+  </div>
+
+    <script>
+    // script.js
+const slider = document.querySelector('.slider');
+const slides = document.querySelectorAll('.slide');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+
+let currentIndex = 0;
+let autoSlideInterval;
+
+// Function to show the current slide
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    slide.classList.toggle('active', i === index);
+  });
+}
+
+// Function to move to the next slide
+function nextSlide() {
+  currentIndex = (currentIndex + 1) % slides.length;
+  showSlide(currentIndex);
+}
+
+// Function to move to the previous slide
+function prevSlide() {
+  currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+  showSlide(currentIndex);
+}
+
+// Start auto-sliding
+function startAutoSlide() {
+  autoSlideInterval = setInterval(nextSlide, 3000); // Change slide every 3 seconds
+}
+
+// Stop auto-sliding
+function stopAutoSlide() {
+  clearInterval(autoSlideInterval);
+}
+
+// Event listeners for navigation buttons
+nextBtn.addEventListener('click', () => {
+  nextSlide();
+  stopAutoSlide();
+  startAutoSlide();
+});
+
+prevBtn.addEventListener('click', () => {
+  prevSlide();
+  stopAutoSlide();
+  startAutoSlide();
+});
+
+// Initialize the slider
+showSlide(currentIndex);
+startAutoSlide();
+  </script>
+</body>
+</html>
